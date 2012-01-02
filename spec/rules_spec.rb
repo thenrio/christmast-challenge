@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'defunkt'
-require 'rule'
+require 'rules'
 
 module Fame
   describe Rule do
