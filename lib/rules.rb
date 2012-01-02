@@ -1,12 +1,12 @@
 module Fame
   class Rule
     def initialize(statement)
-      @attribute, score = (/^(\w+) = (\d+)/.match(statement)[1..2])
+      @attribute, @op, score = (%r(^(\w+) ([\+=]+) (\d+)).match(statement)[1..3])
       @score = score.to_i
     end
 
     def score(profile, score={})
-      score[@attribute.to_sym] = profile[pluralize(@attribute)] * @score
+      eval("score[:#{@attribute.to_sym}] #{@op} #{profile[pluralize(@attribute)]} * @score")
       score
     end
 
