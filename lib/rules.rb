@@ -6,7 +6,7 @@ module Fame
     end
 
     def score(profile, score={})
-      eval("score[:#{@attribute.to_sym}] #{@op} #{profile[pluralize(@attribute)]} * @score")
+      eval("score[:#{@attribute.to_sym}] #{@op} #{profile[pluralize(@attribute)]} * #{@score}")
       score
     end
 

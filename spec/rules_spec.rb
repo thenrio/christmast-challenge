@@ -12,5 +12,10 @@ module Fame
       r = Rule.new("commit += 1")
       r.score({"commits" => 1}, {commit: 100}).must_equal({commit: 101})
     end
+    # it "evaluates a repository statement" do
+    #   r = Rule.new("repository = 1")
+    #   trollz = {"watchers" => 1, "forks" => 0, "name" => "trollz"}
+    #   r.score({"repositories" => [trollz]}).must_equal({repository: 1})
+    # end
   end
 end
