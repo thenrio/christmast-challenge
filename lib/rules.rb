@@ -5,8 +5,9 @@ module Fame
       @score = score.to_i
     end
 
-    def score(profile)
-      profile[pluralize(@attribute)] * @score
+    def score(profile, score={})
+      score[@attribute.to_sym] = profile[pluralize(@attribute)] * @score
+      score
     end
 
     def pluralize(attribute)

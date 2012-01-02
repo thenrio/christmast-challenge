@@ -7,9 +7,10 @@ module Fame
     end
 
     def score(profile)
-      @rules.reduce(0) do |score, rule|
-        score += rule.score(profile)
+      score = @rules.reduce({}) do |score, rule|
+        rule.score(profile)
       end
+      score.reduce(0) { |sum, (_k, v)| sum += v }
     end
   end
 end
