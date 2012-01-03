@@ -4,7 +4,8 @@ module Fame
   class Rule
     attr_reader :attribute, :expression
     def initialize(statement)
-      @attribute, *@expression = statement.split(/\s/)
+      attribute, *@expression = statement.split(/\s/)
+      @attribute = attribute.to_sym
     end
 
     def score(object, score={})
