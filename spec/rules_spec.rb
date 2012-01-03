@@ -19,16 +19,16 @@ module Fame
         trollz = {"watchers" => 1, "forks" => 0, "name" => "trollz"}
         r.score(trollz).must_equal({trollz: 1})
       end
-      # it "evaluates an additive statement" do
-      #   r = Rule.new("repository += 1")
-      #   trollz = {"watchers" => 1, "forks" => 0, "name" => "trollz"}
-      #   r.score({"repositories" => [trollz]}, {repositories: {trollz: 1}}).must_equal({repositories: {trollz: 2}})
-      # end
-      # it "evaluates a true condition" do
-      #   r = Rule.new("repository += 1 if repository.watchers > 5")
-      #   trollz = {"watchers" => 10, "forks" => 0, "name" => "trollz"}
-      #   r.score({"repositories" => [trollz]}, {repositories: {trollz: 1}}).must_equal({repositories: {trollz: 2}})
-      # end
+      it "evaluates an additive statement" do
+        r = Rule.new("repository += 1")
+        trollz = {"watchers" => 1, "forks" => 0, "name" => "trollz"}
+        r.score(trollz, {trollz: 1}).must_equal({trollz: 2})
+      end
+      it "evaluates a true condition (watchers > 5 when watchers = 10)" do
+        r = Rule.new("repository = 10 if repository.watchers > 5")
+        trollz = {"watchers" => 10, "forks" => 0, "name" => "trollz"}
+        r.score(trollz).must_equal({trollz: 10})
+      end
     end
   end
 end
