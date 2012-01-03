@@ -10,14 +10,8 @@ module Fame
     def score(profile)
       scores = mappings.reduce({}) do |scores, (attribute, key)|
         rules = self.rules[attribute] || []
-        o = profile[key]
-        if o.is_a? Array
-          o.reduce(scores) { |acc, oo| apply(acc, rules, oo) }
-        else
-          apply(scores, rules, o)
-        end
+        [profile[key]].flatten.reduce(scores) { |acc, oo| apply(acc, rules, oo) }
       end
-      puts scores
       scores.reduce(0) { |sum, (_k, v)| sum += v }
     end
 

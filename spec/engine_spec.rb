@@ -30,7 +30,7 @@ follower = 10
           }]
         }
       end
-      it "scores 100, when 10 followers, each scoring 10" do
+      it "scores per watchers and forks" do
         rules = <<-EOF
 repository = 1
 repository += repository.watchers
@@ -39,5 +39,22 @@ repository += 5 * repository.forks
         Engine.new(rules).score(badass).must_equal 2001
       end
     end
+
+    describe "defunkt" do
+      include Defunkt
+      it "scores 1250" do
+        rules = <<-EOF
+follower = 2
+repository = 5
+repository = 1 if repository.watchers  < 2 && repository.forks < 2
+repository += 10 if repository.watchers  > 10
+repository += 10 if repository.forks  >  10
+repository = 50 if repository.watchers  > 100 && repository.forks > 100
+        EOF
+        Engine.new(rules).score(defunkt).must_equal 2001
+      end
+    end
+
+
   end
 end
