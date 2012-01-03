@@ -1,9 +1,8 @@
 module Fame
   class Rule
+    attr_reader :attribute, :expression
     def initialize(statement)
-      attribute, @op, score = (%r(^(\w+) ([\+=]+) (\d+)).match(statement)[1..3])
-      @score = score.to_i
-      @attribute = attribute.to_sym
+      @attribute, *@expression = statement.split(/\s/)
     end
 
     def score(profile, score={})
@@ -14,7 +13,10 @@ module Fame
           acc
         end
       else
-        score.instance_eval(statement(@attribute, @op, @score, profile[pluralize(@attribute)]))
+        op, points, *tail = expression
+        count = profile[pluralize(attribute)]
+        statement = "self[:#{attribute}] #{op} #{count} * #{points}"
+        score.instance_eval(statement)
       end
       score
     end
