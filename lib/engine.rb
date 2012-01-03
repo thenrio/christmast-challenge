@@ -10,12 +10,22 @@ module Fame
     def score(profile)
       scores = mappings.reduce({}) do |scores, (attribute, key)|
         rules = self.rules[attribute] || []
-        rules.reduce(scores) { |acc, r| r.score(profile[key], scores) }
+        o = profile[key]
+        if o.is_a? Array
+          o.reduce(scores) { |acc, oo| apply(acc, rules, oo) }
+        else
+          apply(scores, rules, o)
+        end
       end
+      puts scores
       scores.reduce(0) { |sum, (_k, v)| sum += v }
     end
 
     private
+    def apply(scores, rules, o)
+      rules.reduce(scores) { |acc, r| r.score(o, scores) }
+    end
+
     def mappings
       {commit: "commits", follower: "followers", repository: "repositories"}
     end
