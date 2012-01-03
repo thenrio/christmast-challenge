@@ -8,14 +8,19 @@ module Fame
 
     def score(profile, score={})
       if @attribute == :repository
-        score[:repository] = profile["repositories"].reduce({}) do |acc, r|
-          acc[r["name"].to_sym] = @score
+        scores = score[:repositories] ||= {}
+        score[:repositories] = profile["repositories"].reduce(scores) do |acc, r|
+          acc.instance_eval(statement(r["name"].to_sym, @op, @score, 1))
           acc
         end
       else
-        eval("score[:#{@attribute}] #{@op} #{profile[pluralize(@attribute)]} * #{@score}")
+        score.instance_eval(statement(@attribute, @op, @score, profile[pluralize(@attribute)]))
       end
       score
+    end
+
+    def statement(attribute, op, score, count)
+      "self[:#{attribute}] #{op} #{score} * #{count}"
     end
 
     def pluralize(attribute)
