@@ -1,3 +1,3 @@
 require 'minitest/autorun'
-require 'growl'
+require 'turn'
 $LOAD_PATH << File.expand_path('../../lib', __FILE__)
