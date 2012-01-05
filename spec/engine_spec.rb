@@ -51,7 +51,7 @@ repository += 10 if repository.watchers  > 10
 repository += 10 if repository.forks  >  10
 repository = 50 if repository.watchers  > 100 && repository.forks > 100
         EOF
-        Engine.new(rules).score(defunkt).must_equal 2001
+        Engine.new(rules).score(defunkt).must_equal 9568
       end
     end
 

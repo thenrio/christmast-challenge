@@ -12,11 +12,11 @@ module Fame
       op, points, *tail = expression
       if repository?
         repository = OpenStruct.new(object)
-        statement = (["score[:#{repository.name}] #{op} #{points}"] + tail).join(" ")
+        statement = (["score[:'#{repository.name}'] #{op} #{points}"] + tail).join(" ")
         eval(statement)
       else
         count = object
-        statement = "score[:#{attribute}] #{op} #{count} * #{points}"
+        statement = "score[:'#{attribute}'] #{op} #{count} * #{points}"
         eval(statement)
       end
       score
