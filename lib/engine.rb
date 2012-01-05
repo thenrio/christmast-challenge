@@ -20,7 +20,7 @@ module Fame
 
     private
     def apply(scores, rules, o)
-      rules.reduce(scores) { |acc, r| r.score(o, scores) }
+      rules.reduce(scores) { |acc, r| r.score(o, acc) }
     end
 
     def mappings
