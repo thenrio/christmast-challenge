@@ -7,12 +7,15 @@ module Fame
       @rules = rules.split("\n").map { |rule| Rule.new(rule) }.group_by { |r| r.attribute }
     end
 
-    def score(profile)
-      scores = mappings.reduce({}) do |scores, (attribute, key)|
+    def compute(profile)
+      mappings.reduce({}) do |scores, (attribute, key)|
         rules = self.rules[attribute] || []
         [profile[key]].flatten.reduce(scores) { |acc, oo| apply(acc, rules, oo) }
       end
-      scores.reduce(0) { |sum, (_k, v)| sum += v }
+    end
+
+    def score(profile)
+      compute(profile).reduce(0) { |sum, (_k, v)| sum += v }
     end
 
     private
