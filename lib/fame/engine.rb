@@ -1,4 +1,4 @@
-require 'rules'
+require 'fame/rules'
 
 module Fame
   class Engine

@@ -1,6 +1,6 @@
 require 'spec_helper'
-require 'defunkt'
-require 'engine'
+require 'fame/defunkt'
+require 'fame/engine'
 
 module Fame
   describe Engine do

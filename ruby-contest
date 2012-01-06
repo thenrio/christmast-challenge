@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << File.expand_path('../lib', __FILE__)
+require 'fame/engine'
+require 'fame/defunkt'
+puts Fame::Engine.new(File.read(ARGV.shift)).score(Defunkt.profile)

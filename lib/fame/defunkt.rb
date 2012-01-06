@@ -35,4 +35,6 @@ module Defunkt
       }]
     }
   end
+  alias_method :profile, :defunkt
+  module_function :profile
 end
