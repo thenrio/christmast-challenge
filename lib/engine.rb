@@ -8,14 +8,14 @@ module Fame
     end
 
     def compute(profile)
-      mappings.reduce({}) do |scores, (attribute, key)|
+      mappings.map do |attribute, key|
         rules = self.rules[attribute] || []
-        [profile[key]].flatten.reduce(scores) { |acc, oo| apply(acc, rules, oo) }
+        [profile[key]].flatten.reduce({}) { |acc, oo| apply(acc, rules, oo) }
       end
     end
 
     def score(profile)
-      compute(profile).reduce(0) { |sum, (_k, v)| sum += v }
+      compute(profile).reduce(0) { |sum, h| sum += h.reduce(0) {|acc, (_k, v)| acc += v} }
     end
 
     private
